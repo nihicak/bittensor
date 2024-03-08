@@ -253,7 +253,7 @@ class subtensor:
 
     @staticmethod
     def setup_config(network: str, config: bittensor.config):
-        if network != None:
+        if network is not None:
             (
                 evaluated_network,
                 evaluated_endpoint,
@@ -374,7 +374,7 @@ class subtensor:
         # Returns a mocked connection with a background chain connection.
         self.config.subtensor._mock = (
             _mock
-            if _mock != None
+            if _mock is not None
             else self.config.subtensor.get("_mock", bittensor.defaults.subtensor._mock)
         )
         if (
@@ -1966,7 +1966,7 @@ class subtensor:
         )
         if not hasattr(vote_data, "serialize"):
             return None
-        return vote_data.serialize() if vote_data != None else None
+        return vote_data.serialize() if vote_data is not None else None
 
     get_proposal_vote_data = get_vote_data
 
@@ -1987,7 +1987,7 @@ class subtensor:
         senate_members = self.query_module("SenateMembers", "Members", block=block)
         if not hasattr(senate_members, "serialize"):
             return None
-        return senate_members.serialize() if senate_members != None else None
+        return senate_members.serialize() if senate_members is not None else None
 
     def get_proposal_call_data(
         self, proposal_hash: str, block: Optional[int] = None
@@ -2012,7 +2012,7 @@ class subtensor:
         if not hasattr(proposal_data, "serialize"):
             return None
 
-        return proposal_data.serialize() if proposal_data != None else None
+        return proposal_data.serialize() if proposal_data is not None else None
 
     def get_proposal_hashes(self, block: Optional[int] = None) -> Optional[List[str]]:
         """
@@ -2034,7 +2034,7 @@ class subtensor:
         if not hasattr(proposal_hashes, "serialize"):
             return None
 
-        return proposal_hashes.serialize() if proposal_hashes != None else None
+        return proposal_hashes.serialize() if proposal_hashes is not None else None
 
     def get_proposals(
         self, block: Optional[int] = None
@@ -3491,7 +3491,7 @@ class subtensor:
         @retry(delay=2, tries=3, backoff=2, max_delay=4)
         def make_substrate_call_with_retry(encoded_hotkey: List[int]):
             with self.substrate as substrate:
-                block_hash = None if block == None else substrate.get_block_hash(block)
+                block_hash = None if block is None else substrate.get_block_hash(block)
                 params = [encoded_hotkey]
                 if block_hash:
                     params = params + [block_hash]
@@ -3527,7 +3527,7 @@ class subtensor:
         @retry(delay=2, tries=3, backoff=2, max_delay=4)
         def make_substrate_call_with_retry():
             with self.substrate as substrate:
-                block_hash = None if block == None else substrate.get_block_hash(block)
+                block_hash = None if block is None else substrate.get_block_hash(block)
                 params = []
                 if block_hash:
                     params = params + [block_hash]
@@ -3565,7 +3565,7 @@ class subtensor:
         @retry(delay=2, tries=3, backoff=2, max_delay=4)
         def make_substrate_call_with_retry(encoded_coldkey: List[int]):
             with self.substrate as substrate:
-                block_hash = None if block == None else substrate.get_block_hash(block)
+                block_hash = None if block is None else substrate.get_block_hash(block)
                 params = [encoded_coldkey]
                 if block_hash:
                     params = params + [block_hash]
@@ -3700,7 +3700,7 @@ class subtensor:
         This function helps in assessing the participation of a neuron in a particular subnet,
         indicating its specific area of operation or influence within the network.
         """
-        return self.get_uid_for_hotkey_on_subnet(hotkey_ss58, netuid, block) != None
+        return self.get_uid_for_hotkey_on_subnet(hotkey_ss58, netuid, block) is not None
 
     def is_hotkey_registered(
         self,
@@ -3913,7 +3913,7 @@ class subtensor:
         @retry(delay=2, tries=3, backoff=2, max_delay=4)
         def make_substrate_call_with_retry():
             with self.substrate as substrate:
-                block_hash = None if block == None else substrate.get_block_hash(block)
+                block_hash = None if block is None else substrate.get_block_hash(block)
                 params = [netuid, uid]
                 if block_hash:
                     params = params + [block_hash]
