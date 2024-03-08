@@ -132,7 +132,7 @@ def delegate_extrinsic(
     )
 
     # Convert to bittensor.Balance
-    if amount == None:
+    if amount is None:
         # Stake it all.
         staking_balance = bittensor.Balance.from_tao(my_prev_coldkey_balance.tao)
     elif not isinstance(amount, bittensor.Balance):
@@ -267,7 +267,7 @@ def undelegate_extrinsic(
     )
 
     # Convert to bittensor.Balance
-    if amount == None:
+    if amount is None:
         # Stake it all.
         unstaking_balance = bittensor.Balance.from_tao(my_prev_delegated_stake.tao)
 

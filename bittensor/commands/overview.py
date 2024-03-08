@@ -294,7 +294,7 @@ class OverviewCommand:
                     wallet_.hotkey_ss58 = hotkey_addr
                     wallet.hotkey_str = hotkey_addr[:5]  # Max length of 5 characters
                     # Indicates a hotkey not on local machine but exists in stake_info obj on-chain
-                    if hotkey_coldkey_to_hotkey_wallet.get(hotkey_addr) == None:
+                    if hotkey_coldkey_to_hotkey_wallet.get(hotkey_addr) is None:
                         hotkey_coldkey_to_hotkey_wallet[hotkey_addr] = {}
                     hotkey_coldkey_to_hotkey_wallet[hotkey_addr][
                         coldkey_wallet.coldkeypub.ss58_address
@@ -732,7 +732,7 @@ class OverviewCommand:
             wallet_name = Prompt.ask("Enter wallet name", default=defaults.wallet.name)
             config.wallet.name = str(wallet_name)
 
-        if config.netuids != [] and config.netuids != None:
+        if config.netuids != [] and config.netuids is not None:
             if not isinstance(config.netuids, list):
                 config.netuids = [int(config.netuids)]
             else:

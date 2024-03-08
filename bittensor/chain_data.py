@@ -207,7 +207,7 @@ class AxonInfo:
         return net.ip__str__(self.ip_type, self.ip, self.port)
 
     def __eq__(self, other: "AxonInfo"):
-        if other == None:
+        if other is None:
             return False
         if (
             self.version == other.version

@@ -80,7 +80,7 @@ def check_for_cuda_reg_config(config: "bittensor.config") -> None:
     """Checks, when CUDA is available, if the user would like to register with their CUDA device."""
     if torch.cuda.is_available():
         if not config.no_prompt:
-            if config.pow_register.cuda.get("use_cuda") == None:  # flag not set
+            if config.pow_register.cuda.get("use_cuda") is None:  # flag not set
                 # Ask about cuda registration only if a CUDA device is available.
                 cuda = Confirm.ask("Detected CUDA device, use CUDA for registration?\n")
                 config.pow_register.cuda.use_cuda = cuda
@@ -184,7 +184,7 @@ def filter_netuids_by_registered_hotkeys(
         )
         netuids_with_registered_hotkeys.extend(netuids_list)
 
-    if cli.config.netuids == None or cli.config.netuids == []:
+    if cli.config.netuids is None or cli.config.netuids == []:
         netuids = netuids_with_registered_hotkeys
 
     elif cli.config.netuids != []:

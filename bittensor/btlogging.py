@@ -122,16 +122,16 @@ class logging:
 
         cls.__has_been_inited__ = True
 
-        if config == None:
+        if config is None:
             config = logging.config()
         config = copy.deepcopy(config)
-        config.logging.debug = debug if debug != None else config.logging.debug
-        config.logging.trace = trace if trace != None else config.logging.trace
+        config.logging.debug = debug if debug is not None else config.logging.debug
+        config.logging.trace = trace if trace is not None else config.logging.trace
         config.logging.record_log = (
-            record_log if record_log != None else config.logging.record_log
+            record_log if record_log is not None else config.logging.record_log
         )
         config.logging.logging_dir = (
-            logging_dir if logging_dir != None else config.logging.logging_dir
+            logging_dir if logging_dir is not None else config.logging.logging_dir
         )
 
         # Remove default sink.
@@ -141,9 +141,9 @@ class logging:
             pass
 
         # Optionally Remove other sinks.
-        if cls.__std_sink__ != None:
+        if cls.__std_sink__ is not None:
             logger.remove(cls.__std_sink__)
-        if cls.__file_sink__ != None:
+        if cls.__file_sink__ is not None:
             logger.remove(cls.__file_sink__)
 
         # Add filtered sys.stdout.
@@ -197,7 +197,7 @@ class logging:
     @classmethod
     def add_args(cls, parser: argparse.ArgumentParser, prefix: str = None):
         """Accept specific arguments fro parser"""
-        prefix_str = "" if prefix == None else prefix + "."
+        prefix_str = "" if prefix is None else prefix + "."
         try:
             default_logging_debug = os.getenv("BT_LOGGING_DEBUG") or False
             default_logging_trace = os.getenv("BT_LOGGING_TRACE") or False
@@ -288,7 +288,7 @@ class logging:
         """Format logging message"""
         if isinstance(prefix, torch.Tensor):
             prefix = prefix.detach()
-        if sufix != None:
+        if sufix is not None:
             if isinstance(sufix, torch.Tensor):
                 sufix = "shape: {}".format(str(sufix.shape)) + " data: {}".format(
                     str(sufix.detach())

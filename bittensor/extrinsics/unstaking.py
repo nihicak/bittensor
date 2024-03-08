@@ -116,7 +116,7 @@ def unstake_extrinsic(
         )
 
     # Convert to bittensor.Balance
-    if amount == None:
+    if amount is None:
         # Unstake it all.
         unstaking_balance = old_stake
     elif not isinstance(amount, bittensor.Balance):
@@ -287,7 +287,7 @@ def unstake_multiple_extrinsic(
         zip(hotkey_ss58s, amounts, old_stakes)
     ):
         # Covert to bittensor.Balance
-        if amount == None:
+        if amount is None:
             # Unstake it all.
             unstaking_balance = old_stake
         elif not isinstance(amount, bittensor.Balance):

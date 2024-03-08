@@ -92,7 +92,7 @@ def add_stake_extrinsic(
         )
 
     # Convert to bittensor.Balance
-    if amount == None:
+    if amount is None:
         # Stake it all.
         staking_balance = bittensor.Balance.from_tao(old_balance.tao)
     elif not isinstance(amount, bittensor.Balance):
@@ -305,7 +305,7 @@ def add_stake_multiple_extrinsic(
     ):
         staking_all = False
         # Convert to bittensor.Balance
-        if amount == None:
+        if amount is None:
             # Stake it all.
             staking_balance = bittensor.Balance.from_tao(old_balance.tao)
             staking_all = True

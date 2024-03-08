@@ -145,7 +145,7 @@ def test_custom_synapse():
     assert isinstance(synapse, Test)
     assert synapse.name == "Test"
     assert synapse.a == 1
-    assert synapse.b == None
+    assert synapse.b is None
     assert synapse.c == 3
     assert synapse.d == [1, 2, 3, 4]
     assert synapse.e == [1, 2, 3, 4]
@@ -160,9 +160,9 @@ def test_custom_synapse():
     # Create a new Test from the headers and check its properties
     next_synapse = synapse.from_headers(synapse.to_headers())
     assert next_synapse.a == 0  # Default value is 0
-    assert next_synapse.b == None
-    assert next_synapse.c == None
-    assert next_synapse.d == None
+    assert next_synapse.b is None
+    assert next_synapse.c is None
+    assert next_synapse.d is None
     assert next_synapse.e == []  # Empty list is default for list types
 
 

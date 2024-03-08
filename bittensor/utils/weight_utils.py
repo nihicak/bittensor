@@ -223,7 +223,7 @@ def process_weights_for_netuid(
     bittensor.logging.debug("metagraph", metagraph)
 
     # Get latest metagraph from chain if metagraph is None.
-    if metagraph == None:
+    if metagraph is None:
         metagraph = subtensor.metagraph(netuid)
 
     # Cast weights to floats.
