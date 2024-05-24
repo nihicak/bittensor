@@ -23,7 +23,7 @@ from ..errors import MetadataError
 
 
 def serve_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     ip: str,
     port: int,
@@ -138,7 +138,7 @@ def serve_extrinsic(
 
 
 def serve_axon_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     netuid: int,
     axon: "bittensor.Axon",
     wait_for_inclusion: bool = False,
@@ -201,7 +201,7 @@ def serve_axon_extrinsic(
 
 
 def publish_metadata(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     type: str,

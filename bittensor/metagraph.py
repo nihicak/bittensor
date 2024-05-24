@@ -473,7 +473,7 @@ class MetagraphMixin(ABC):
         self,
         block: Optional[int] = None,
         lite: bool = True,
-        subtensor: Optional["bittensor.subtensor"] = None,
+        subtensor: Optional["bittensor.Subtensor"] = None,
     ):
         """
         Synchronizes the metagraph with the Bittensor network's current state. It updates the metagraph's attributes
@@ -603,7 +603,7 @@ class MetagraphMixin(ABC):
             else np.array(data, dtype=dtype)
         )
 
-    def _set_weights_and_bonds(self, subtensor: Optional[bittensor.subtensor] = None):
+    def _set_weights_and_bonds(self, subtensor: Optional[bittensor.Subtensor] = None):
         """
         Computes and sets the weights and bonds for each neuron in the metagraph. This method is responsible for processing the raw weight and bond data obtained from the network and converting it into a structured format suitable for the metagraph model.
 

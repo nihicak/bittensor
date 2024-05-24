@@ -98,7 +98,7 @@ def check_threshold_amount(
 
 
 def unstake_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
@@ -238,7 +238,7 @@ def unstake_extrinsic(
 
 
 def unstake_multiple_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58s: List[str],
     amounts: Optional[List[Union[Balance, float]]] = None,

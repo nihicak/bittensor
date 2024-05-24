@@ -22,7 +22,7 @@ import bittensor.utils.networking as net
 
 
 def prometheus_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     port: int,
     netuid: int,

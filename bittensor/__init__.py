@@ -293,7 +293,7 @@ from . import subtensor as subtensor_module
 # Double import allows using class `Subtensor` by referencing `bittensor.Subtensor` and `bittensor.subtensor`.
 # This will be available for a while until we remove reference `bittensor.subtensor`
 from .subtensor import Subtensor
-from .subtensor import Subtensor as subtensor
+from .subtensor import subtensor as subtensor
 
 from .cli import cli as cli, COMMANDS as ALL_COMMANDS
 from .btlogging import logging

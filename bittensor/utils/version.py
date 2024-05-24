@@ -1,10 +1,12 @@
-from typing import Optional
-from pathlib import Path
 import time
+from pathlib import Path
+from typing import Optional
+
+import requests
+from deprecated import deprecated
 from packaging.version import Version
 
 import bittensor
-import requests
 
 VERSION_CHECK_THRESHOLD = 86400
 
@@ -85,18 +87,11 @@ def check_version(timeout: int = 15):
         raise VersionCheckError("Version check failed") from e
 
 
+@deprecated(reason="Please use check_version() instead", category=DeprecationWarning)
 def version_checking(timeout: int = 15):
     """
     Deprecated, kept for backwards compatibility. Use check_version() instead.
     """
-
-    from warnings import warn
-
-    warn(
-        "version_checking() is deprecated, please use check_version() instead",
-        DeprecationWarning,
-    )
-
     try:
         check_version(timeout)
     except VersionCheckError:

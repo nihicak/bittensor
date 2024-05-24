@@ -32,7 +32,7 @@ logger = logging.getLogger(BITTENSOR_LOGGER_NAME)
 
 
 def root_register_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,

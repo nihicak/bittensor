@@ -29,6 +29,7 @@ from typing import List, Dict, Union, Optional, Tuple, TypedDict, Any
 
 import numpy as np
 import scalecodec
+from deprecated import deprecated
 from numpy.typing import NDArray
 from retry import retry
 from scalecodec.base import RuntimeConfiguration
@@ -99,8 +100,8 @@ from .utils import (
 )
 from .utils.balance import Balance
 from .utils.registration import POWSolution
-from .utils.subtensor import get_subtensor_errors
 from .utils.registration import legacy_torch_api_compat
+from .utils.subtensor import get_subtensor_errors
 
 KEY_NONCE: Dict[str, int] = {}
 
@@ -5199,4 +5200,11 @@ class Subtensor:
 
 
 # TODO: remove this after fully migrate `bittensor.subtensor` to `bittensor.Subtensor` in `bittensor/__init__.py`
-subtensor = Subtensor
+# subtensor = Subtensor
+
+
+@deprecated(
+    reason="Use `bittensor.Subtensor` instead of `bittensor.subtensor`. Will be removed in version 8.0.0"
+)
+class subtensor(Subtensor):
+    """Deprecates `subtensor` name `Subtensor` class."""

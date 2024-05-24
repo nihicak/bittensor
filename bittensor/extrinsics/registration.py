@@ -29,7 +29,7 @@ from bittensor.utils.registration import (
 
 
 def register_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     wait_for_inclusion: bool = False,
@@ -222,7 +222,7 @@ def register_extrinsic(
 
 
 def burned_register_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     netuid: int,
     wait_for_inclusion: bool = False,
@@ -334,7 +334,7 @@ class MaxAttemptsException(Exception):
 
 
 def run_faucet_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,
     wait_for_finalization: bool = True,
@@ -483,7 +483,7 @@ def run_faucet_extrinsic(
 
 
 def swap_hotkey_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     new_wallet: "bittensor.wallet",
     wait_for_inclusion: bool = False,

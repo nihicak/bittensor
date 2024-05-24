@@ -34,7 +34,7 @@ logger = logging.getLogger(BITTENSOR_LOGGER_NAME)
 
 
 def nominate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     wait_for_finalization: bool = False,
     wait_for_inclusion: bool = True,
@@ -100,7 +100,7 @@ def nominate_extrinsic(
 
 
 def delegate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     delegate_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
@@ -235,7 +235,7 @@ def delegate_extrinsic(
 
 
 def undelegate_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     delegate_ss58: Optional[str] = None,
     amount: Optional[Union[Balance, float]] = None,
@@ -366,7 +366,7 @@ def undelegate_extrinsic(
 
 
 def decrease_take_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: Optional[str] = None,
     take: int = 0,
@@ -426,7 +426,7 @@ def decrease_take_extrinsic(
 
 
 def increase_take_extrinsic(
-    subtensor: "bittensor.subtensor",
+    subtensor: "bittensor.Subtensor",
     wallet: "bittensor.wallet",
     hotkey_ss58: Optional[str] = None,
     take: int = 0,
