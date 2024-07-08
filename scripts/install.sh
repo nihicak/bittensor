@@ -99,6 +99,36 @@ linux_update_pip() {
     $python -m pip install --upgrade pip
 }
 
+linux_install_cron() {
+  ohai "Installing cron"
+  sudo apt-get install cron
+}
+
+linux_install_ufw() {
+  ohai "Installing ufw"
+  sudo apt-get install ufw
+}
+
+linux_install_pm2() {
+  ohai "Installing pm2"
+  sudo apt-get install jq npm
+  sudo npm install -g pm2
+  exit_on_error $?
+}
+
+linux_install_docker() {
+  sudo apt-get install ca-certificates curl
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+}
+
 linux_install_bittensor() {
     ohai "Cloning bittensor@master into ~/.bittensor/bittensor"
     mkdir -p ~/.bittensor/bittensor
@@ -111,64 +141,6 @@ linux_install_bittensor() {
 linux_increase_ulimit(){
     ohai "Increasing ulimit to 1,000,000"
     prlimit --pid=$PPID --nofile=1000000
-}
-
-
-mac_install_xcode() {
-    which -s xcode-select
-    if [[ $? != 0 ]] ; then
-        ohai "Installing xcode:"
-        xcode-select --install
-        exit_on_error $? 
-    fi
-}
-
-mac_install_brew() {
-    which -s brew
-    if [[ $? != 0 ]] ; then
-        ohai "Installing brew:"
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    else
-        ohai "Updating brew:"
-        brew update --verbose
-    fi
-    exit_on_error $? 
-}
-
-mac_install_cmake() {
-    which -s cmake
-    if [[ $? != 0 ]] ; then
-        ohai "Installing cmake:"
-        brew install cmake
-    else
-        ohai "Updating cmake:"
-        brew upgrade cmake
-    fi
-}
-
-mac_install_python() {
-    which -s python3
-    ohai "Installing python3"
-    brew list python@3 &>/dev/null || brew install python@3;
-    ohai "Updating python3"
-    brew upgrade python@3
-    exit_on_error $? 
-}
-
-mac_update_pip() {
-    PYTHONPATH=$(which $python)
-    ohai "You are using python@ $PYTHONPATH$"
-    ohai "Installing python tools"
-    $python -m pip install --upgrade pip
-}
-
-mac_install_bittensor() {
-    ohai "Cloning bittensor@text_prompting into ~/.bittensor/bittensor"
-    git clone https://github.com/opentensor/bittensor.git ~/.bittensor/bittensor/ 2> /dev/null || (cd ~/.bittensor/bittensor/ ; git fetch origin master ; git checkout master ; git pull --ff-only ; git reset --hard; git clean -xdf)
-    ohai "Installing bittensor"
-    $python -m pip install -e ~/.bittensor/bittensor/
-    exit_on_error $? 
-    deactivate
 }
 
 # Do install.
@@ -197,13 +169,29 @@ if [[ "$OS" == "Linux" ]]; then
     echo "build-essential"
     echo "python3"
     echo "python3-pip"
+    echo "cron"
+    echo "ufw"
+    echo "pm2"
+    echo "docker"
     echo "bittensor"
 
     wait_for_user
     linux_install_pre
     linux_install_python
     linux_update_pip
-    linux_install_bittensor
+    linux_install_cron
+    linux_install_ufw
+    linux_install_pm2
+    linux_install_docker
+
+    echo "Would you like to install latest Bittensor?"
+    select yn in "Y" "N"; do
+        case $yn in
+            [Yy]* ) linux_install_bittensor; break;;
+            [Nn]* ) echo "Skip lastest Bittensor installation";;
+            * ) echo "Please answer Y or N.";;
+        esac
+    done
 
     ohai "Would you like to increase the ulimit? This will allow your miner to run for a longer time"
     wait_for_user
@@ -212,48 +200,14 @@ if [[ "$OS" == "Linux" ]]; then
     echo ""
     echo "######################################################################"
     echo "##                                                                  ##"
-    echo "##                      BITTENSOR SETUP                             ##"
+    echo "##                      ESSENTIAL SETUP                             ##"
     echo "##                                                                  ##"
     echo "######################################################################"
     echo ""
     echo ""
-
-elif [[ "$OS" == "Darwin" ]]; then
-    echo """
     
-██████╗░██╗████████╗████████╗███████╗███╗░░██╗░██████╗░█████╗░██████╗░
-██╔══██╗██║╚══██╔══╝╚══██╔══╝██╔════╝████╗░██║██╔════╝██╔══██╗██╔══██╗
-██████╦╝██║░░░██║░░░░░░██║░░░█████╗░░██╔██╗██║╚█████╗░██║░░██║██████╔╝
-██╔══██╗██║░░░██║░░░░░░██║░░░██╔══╝░░██║╚████║░╚═══██╗██║░░██║██╔══██╗
-██████╦╝██║░░░██║░░░░░░██║░░░███████╗██║░╚███║██████╔╝╚█████╔╝██║░░██║
-╚═════╝░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚═╝░░╚══╝╚═════╝░░╚════╝░╚═╝░░╚═╝
-                                                    
-                                                    - Mining a new element.
-    """
-    ohai "This script will install:"
-    echo "xcode"
-    echo "homebrew"
-    echo "git"
-    echo "cmake"
-    echo "python3"
-    echo "python3-pip"
-    echo "bittensor"
-
-    wait_for_user
-    mac_install_brew
-    mac_install_cmake
-    mac_install_python
-    mac_update_pip
-    mac_install_bittensor
-    echo ""
-    echo ""
-    echo "######################################################################"
-    echo "##                                                                  ##"
-    echo "##                      BITTENSOR SETUP                             ##"
-    echo "##                                                                  ##"
-    echo "######################################################################"
 else
-  abort "Bittensor is only supported on macOS and Linux"
+  abort "Setup is only for Linux"
 fi
 
 # Use the shell's audible bell.
@@ -263,36 +217,6 @@ fi
 
 echo ""
 echo ""
-ohai "Welcome. Installation successful"
+echo "Essential setup successful."
 echo ""
-echo "- 1. Create a wallet "
-echo "    $ btcli new_coldkey (for holding funds)"
-echo "    $ btcli new_hotkey (for running miners)"
 echo ""
-echo "- 2. Run a miner on the prompting network. "
-echo "    $ python3 ~/.bittensor/bittensor/neurons/text/prompting/miners/gpt4all/neuron.py"
-echo ""
-ohai "Extras:"
-echo ""
-echo "- Check your tao balance: "
-echo "    $ btcli wallet overview"
-echo ""
-echo "- Stake to your miners:"
-echo "    $ btcli stake add"
-echo "    $ btcli stake remove"
-echo ""
-echo "- Create/list/register wallets"
-echo "    $ btcli w new_coldkey"
-echo "    $ btcli w new_hotkey"
-echo "    $ btcli w list"
-echo "    $ btcli s register"
-echo ""
-echo "- Use the Python API"
-echo "    $ python3"echo "    >> import bittensor"
-echo ""
-echo "- Join the discussion: "
-echo "    ${tty_underline}https://discord.gg/3rUr6EcvbB${tty_reset}"
-echo ""
-
-
-    
