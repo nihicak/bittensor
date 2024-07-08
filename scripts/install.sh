@@ -117,6 +117,7 @@ linux_install_pm2() {
 }
 
 linux_install_docker() {
+  ohai "Installing docker"
   sudo apt-get install ca-certificates curl
   sudo install -m 0755 -d /etc/apt/keyrings
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
@@ -172,8 +173,8 @@ if [[ "$OS" == "Linux" ]]; then
     echo "cron"
     echo "ufw"
     echo "pm2"
-    echo "docker"
-    echo "bittensor"
+    echo "docker (choice)"
+    echo "bittensor (choice)"
 
     wait_for_user
     linux_install_pre
@@ -182,14 +183,22 @@ if [[ "$OS" == "Linux" ]]; then
     linux_install_cron
     linux_install_ufw
     linux_install_pm2
-    linux_install_docker
+
+    echo "Would you like to install Docker?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) linux_install_docker; break;;
+            No ) echo "Skipping Docker installation"; break;;
+            * ) echo "Please enter 1 or 2";;
+        esac
+    done
 
     echo "Would you like to install latest Bittensor?"
-    select yn in "Y" "N"; do
+    select yn in "Yes" "No"; do
         case $yn in
             [Yy]* ) linux_install_bittensor; break;;
-            [Nn]* ) echo "Skip lastest Bittensor installation";;
-            * ) echo "Please answer Y or N.";;
+            [Nn]* ) echo "Skipping Bittensor installation"; break;;
+            * ) echo "Please enter 1 or 2";;
         esac
     done
 
@@ -215,8 +224,6 @@ if [[ -t 1 ]]; then
 printf "\a"
 fi
 
-echo ""
-echo ""
 echo "Essential setup successful."
 echo ""
 echo ""
