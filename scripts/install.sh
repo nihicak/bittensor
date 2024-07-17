@@ -112,7 +112,7 @@ linux_install_ufw() {
 linux_install_pm2() {
   ohai "Installing pm2"
   sudo apt-get install -y jq npm
-  sudo npm install -g -y pm2
+  sudo npm install -g pm2
   exit_on_error $?
 }
 
